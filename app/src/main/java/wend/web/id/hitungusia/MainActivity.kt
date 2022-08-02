@@ -34,20 +34,20 @@ class MainActivity : AppCompatActivity() {
         tvLabelHari = findViewById(R.id.tvLabelHari)
 
         btnTanggal.setOnClickListener {
-            clickTanggal()
+            clickBtnTanggal()
         }
 
     }
 
-    private fun clickTanggal() {
+    private fun clickBtnTanggal() {
         val myCalendar = Calendar.getInstance()
         val currentYear = myCalendar.get(Calendar.YEAR)
         val currentMonth = myCalendar.get(Calendar.MONTH)
         val currentDay = myCalendar.get(Calendar.DAY_OF_MONTH)
 
-        DatePickerDialog(this,{
+        val datePicker = DatePickerDialog(this,{
                 _, year, month, day ->
-            val tanggal = "$day / ${month+1} / $year"
+            val tanggal = "$day/${month+1}/$year"
             tvTanggal?.text = tanggal
             tvTanggal?.visibility=View.VISIBLE
             tvMenit?.visibility = View.VISIBLE
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
             tvLabelHari?.visibility = View.VISIBLE
             val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
             val selectedDate = sdf.parse(tvTanggal?.text as String)
-            val currentDate = sdf.parse("$currentDay/${currentMonth+1}/$currentYear")
+            val currentDate = sdf.parse(sdf.format(System.currentTimeMillis()))
             try {
                 val minutes = (currentDate?.time ?:0) / 60000 - (selectedDate?.time?:0) / 60000
                 val hours = minutes / 60
@@ -71,13 +71,15 @@ class MainActivity : AppCompatActivity() {
                 print(e.message)
             }
 
-            Toast.makeText(this,"Tanggal terpilih adalah $day ${month+1} $year",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"terpilih tanggal $day bulan ${month+1} tahun $year",Toast.LENGTH_SHORT).show()
             },
             currentYear,
             currentMonth,
             currentDay
-        ).show()
+        )
 
+        datePicker.datePicker.maxDate = System.currentTimeMillis() - 86400000
+        datePicker.show()
 
     }
 }
