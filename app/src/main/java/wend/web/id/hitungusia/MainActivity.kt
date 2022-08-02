@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun clickTanggal() {
+    private fun clickTanggal() {
         val myCalendar = Calendar.getInstance()
         val currentYear = myCalendar.get(Calendar.YEAR)
         val currentMonth = myCalendar.get(Calendar.MONTH)
@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity() {
 
         DatePickerDialog(this,{
                 _, year, month, day ->
-            tvTanggal?.text = "$day/${month+1}/$year"
+            val tanggal = "$day / ${month+1} / $year"
+            tvTanggal?.text = tanggal
             tvTanggal?.visibility=View.VISIBLE
             tvMenit?.visibility = View.VISIBLE
             tvJam?.visibility = View.VISIBLE
@@ -56,15 +57,19 @@ class MainActivity : AppCompatActivity() {
             tvLabelMenit?.visibility = View.VISIBLE
             tvLabelJam?.visibility = View.VISIBLE
             tvLabelHari?.visibility = View.VISIBLE
-            val sdf = SimpleDateFormat("dd/MM/yyyy")
-            var selectedDate = sdf.parse(tvTanggal?.text as String)
+            val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+            val selectedDate = sdf.parse(tvTanggal?.text as String)
             val currentDate = sdf.parse("$currentDay/${currentMonth+1}/$currentYear")
-            val minutes = currentDate.time / 60000 - selectedDate.time / 60000
-            val hours = minutes / 60
-            val days = hours / 24
-            tvMenit?.text = String.format(Locale.ENGLISH,"%,d",minutes)
-            tvJam?.text = String.format(Locale.ENGLISH,"%,d",hours)
-            tvHari?.text = String.format(Locale.ENGLISH,"%,d",days)
+            try {
+                val minutes = (currentDate?.time ?:0) / 60000 - (selectedDate?.time?:0) / 60000
+                val hours = minutes / 60
+                val days = hours / 24
+                tvMenit?.text = String.format(Locale.ENGLISH,"%,d",minutes)
+                tvJam?.text = String.format(Locale.ENGLISH,"%,d",hours)
+                tvHari?.text = String.format(Locale.ENGLISH,"%,d",days)
+            }catch(e: Exception){
+                print(e.message)
+            }
 
             Toast.makeText(this,"Tanggal terpilih adalah $day ${month+1} $year",Toast.LENGTH_SHORT).show()
             },
