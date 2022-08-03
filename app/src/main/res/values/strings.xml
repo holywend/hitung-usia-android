@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Hitung Usia</string>
+    <string name="hitung_usia_anda">Hitung Usia Anda!</string>
+    <string name="pilih_tanggal_lahir">PILIH TANGGAL LAHIR</string>
+    <string name="tanggal_terpilih">tanggal terpilih:</string>
+    <string name="_01_01_1900">01/01/1900</string>
+    <string name="dalam_menit">dalam menit:</string>
+    <string name="_140_000_000">140,000,000</string>
+    <string name="dalam_jam">dalam jam:</string>
+    <string name="dalam_hari">dalam hari:</string>
+    <string name="created">created by Wendy@2022\nVersion 1.0</string>
 </resources>

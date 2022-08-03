@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         btnTanggal.setOnClickListener {
             clickBtnTanggal()
         }
-
     }
 
     private fun clickBtnTanggal() {
